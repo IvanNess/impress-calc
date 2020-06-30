@@ -1,0 +1,16 @@
+@import '../app.scss';
+
+.calc-header{
+    .title{
+        text-align: center;
+        h1{
+            @include question();
+            font-size: 1.1rem;
+        }
+    }
+    // .description{
+    // }
+    .text{
+        font-style: italic;
+    }
+}

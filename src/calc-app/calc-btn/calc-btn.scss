@@ -1,0 +1,26 @@
+@import '../app.scss';
+
+.calc-btn{
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .btn{
+        padding:  0.5rem 2rem;
+        border-radius: 2px;
+        transition-duration: 0.4s;
+        color: white;
+        background-color: $selected-font-color;
+        &:hover{
+            cursor: pointer;
+            color: $common-font-color;
+            background-color: $selected-background-color;
+            
+        }
+        &.loading{
+            cursor: default;
+            color: $common-font-color;
+            background-color: rgba($selected-background-color, 0.4);
+        }
+    }
+}

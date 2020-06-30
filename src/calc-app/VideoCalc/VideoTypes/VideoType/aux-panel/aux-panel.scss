@@ -1,0 +1,295 @@
+@import '../../../../app.scss';     
+  
+$width: calc(#{$inputWidth} + #{$inputLeftPadding} + 2 * #{$inputLeftMargin} + 2 * #{$input-border-width} + #{$selectedWidth} + 2 * #{$selectedPadding});
+
+@mixin fade-in($width, $name) {
+  -webkit-animation: fade-in-#{$name} 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: fade-in-#{$name} 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  @-webkit-keyframes fade-in-#{$name} {
+    0% {    
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;    
+    }
+  }
+  @keyframes fade-in-#{$name} {
+      0% {
+        opacity: 0;  
+        width: 0;
+        //transform: translateY(100%);
+      } 
+      50%{
+        opacity: 0;
+        //transform: translateY(100%);
+      }
+      70%{
+        opacity: 0.2;
+        //transform: translateY(100%);
+      }
+      100% {
+        opacity: 1;
+        width: $width;
+        //transform: translateY(0);
+      }
+  }
+  @keyframes fade-in-connect {
+    0% {
+      opacity: 0;
+      width: 0;
+      //transform: translateY(100%);
+    }
+    50%{
+      opacity: 0;
+      //transform: translateY(100%);
+    }
+    70%{
+      opacity: 0.05;
+      //transform: translateY(100%);
+    }
+    100% {
+      opacity: 1; 
+      width: $width;
+      //transform: translateY(0);
+    }
+  }
+}   
+
+@mixin fade-out($width, $name) {
+  -webkit-animation: fade-out-#{$name} 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: fade-out-#{$name} 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+
+  @-webkit-keyframes fade-out-#{$name} {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out-#{$name} {
+      0% {
+        opacity: 0;
+        width: $width;
+        //transform: translateY(0);
+      }
+      10%{
+        opacity: 0;
+      }
+      100% {     
+        opacity: 0;
+        width: 0;
+        //transform: translateY(100%);
+      }
+  }
+}
+ 
+
+.aux-panel{
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: $height;
+  width: $width;
+  &.first{
+    width: 0;
+    opacity: 0;
+    .input, .choice-panel{
+      width: 0;
+      input, div{
+        width: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+      }
+    }
+  }
+  &.show{ 
+    @include fade-in($width, all) 
+  }
+  &:not(.first).hide{
+      @include fade-out($width, all);
+      .input, .choice-panel{ 
+        width: 0;
+        input, div{
+          width: 0;
+          padding: 0;
+          margin: 0; 
+          border: none;
+        }
+      }
+  }
+  .input{ 
+    input{
+      background-color: white;
+      margin: 0 $inputLeftMargin;
+      padding: 0 0 0 $inputLeftPadding;
+      border-radius: $border-radius;
+      border-width: $input-border-width;
+      height: calc((#{$height} - 2 * #{$input-border-width}) * 0.8); 
+      width: $inputWidth;
+      &:focus{
+        outline: none;
+        box-shadow: inset 0 0 0 1px $selectingColor;
+      }
+      &.error{
+        //border: solid red 1px;
+        box-shadow: $error-box-shadow;   
+      }
+    }
+  }
+  .choice-panel{
+    background-color: $selected-background-color;
+    position: relative;
+    border-radius: $border-radius;
+    .selected{
+        width: $selectedWidth;
+        height: calc(#{$height} - 2*#{$selectedPadding});
+        padding: $selectedPadding;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &:not(.open):not(.alone)::after{
+            cursor: pointer;
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            right: $right;
+            top: calc(50% - #{$selectedPadding});
+            margin-top: 0px;
+            border-top: 10px solid $arrow-color;  
+            border-left: $arrowWidth/2 solid transparent;
+            border-right: $arrowWidth/2 solid transparent;  
+        }
+        &:not(.alone).open::after{
+            cursor: pointer;
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            right: $right;
+            top: calc(50% - #{$selectedPadding});
+            margin-top: 0px;
+            border-bottom: 10px solid $arrow-color;  
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;  
+        }
+        &:hover{
+            cursor: pointer;
+        }
+        &.alone:hover{ 
+          cursor: default;
+        }  
+    }
+    .choices{  
+        position: absolute;
+        left: -0.5px;    
+        top: calc(100% - #{$border-radius});     
+        .param{
+            width: calc(#{$selectedWidth} + #{$selectedPadding});
+            padding: $selectedPadding;
+            background-color: $secondary-color;
+            &:last-child{
+                border-radius: 0 0 $border-radius $border-radius;
+            }
+            &:hover{
+                cursor: pointer;
+            }
+            &.chosen{
+                background-color: $selected-background-color;
+            }
+        }    
+    }
+  }
+  &.email, &.messangers{
+    animation: none;
+    $connect-input-width: 13rem;
+    $connectWidth: calc(#{$connect-input-width} + #{$inputLeftPadding} + 2 * #{$inputLeftMargin} + 2 * #{$input-border-width});
+    width: $connectWidth;
+    .input{
+      input{
+        width: $connect-input-width;
+        background-color: $secondary-color;
+      }
+    }
+    .choice-panel{
+      .selected{
+        width: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  &.nomoremin, &.nomoresec{
+    width: auto;
+    animation: none;
+    .input{
+      input{
+        background-color: $secondary-color;
+      }
+    }
+    .choice-panel{
+      .selected{
+        background-color: white;
+        width: 2em;
+      }
+    }
+  }
+  &.filming{
+    $selectedWidth: 5rem;
+    $width: calc(#{$inputWidth} + #{$inputLeftPadding} + 2 * #{$inputLeftMargin} + 2 * #{$input-border-width} + #{$selectedWidth} + 2 * #{$selectedPadding});
+    &.show{
+      @include fade-in($width, filming);
+    }    
+    &:not(.first).hide{
+      @include fade-out($width, filming);
+    }
+    .choice-panel{
+      .selected{
+        font-size: 0.9rem;
+        width: $selectedWidth;
+      }
+    }
+  }
+  &.edit, &.captureEdit, &.actors, &.sounds, &.graph{
+    $selectedWidth: 2rem;
+    $width: calc(#{$inputWidth} + #{$inputLeftPadding} + 2 * #{$inputLeftMargin} + 2 * #{$input-border-width} + #{$selectedWidth} + 2 * #{$selectedPadding});
+    &.show{
+      @include fade-in($width, edit);
+    }
+    &:not(.first).hide{
+      @include fade-out($width, edit);
+    }
+    .choice-panel{
+      .selected{
+        width: $selectedWidth;
+      }
+    }
+  }
+  &.license, &.footages{
+    $selectedWidth: 3.5rem;
+    $width: calc(#{$inputWidth} + #{$inputLeftPadding} + 2 * #{$inputLeftMargin} + 2 * #{$input-border-width} + #{$selectedWidth} + 2 * #{$selectedPadding});
+    &.show{
+      @include fade-in($width, license);
+    }    
+    &:not(.first).hide{
+      @include fade-out($width, license);
+    }
+    .choice-panel{
+      .selected{
+        width: $selectedWidth;
+      }
+      .choices{
+        .param{
+          width: calc(#{$selectedWidth} + #{$selectedPadding});
+          z-index: 10;
+        }
+      }
+    }
+  }
+}
+
+
+  

@@ -1,0 +1,25 @@
+@import '../../../app.scss';
+
+.connect-type{
+    margin: $type-margin;
+    input{
+        background-color: $secondary-color;
+        padding: 0 0 0 $inputLeftPadding;
+        border-radius: $border-radius;
+        border-width: $input-border-width;
+        height: calc((#{$height} - 2 * #{$input-border-width}) * 0.9); 
+        width: 13rem;
+        &:focus{
+          outline: none;
+          box-shadow: inset 0 0 0 1px $selectingColor;
+        }
+        &::placeholder{
+            font-style: italic;
+        }
+        &.error{
+            //border: $error-border;
+            box-shadow: $error-box-shadow;
+
+        }
+    }
+}

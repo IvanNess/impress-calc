@@ -1,0 +1,12 @@
+@import '../../app.scss';
+
+.connect-types{
+    .question{
+        @include question
+    }
+    .connect-types-map{
+        display: flex;
+        flex-direction: row;
+        //padding: 0em 1em;
+    }
+}

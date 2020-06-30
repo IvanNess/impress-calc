@@ -1,0 +1,156 @@
+//#c9ec23 #00171f #ffffff #e4edf1 #ff2a00
+$selected-color: #00171f;
+$selected-font-color: #ff2a00;
+// $selected-font-color: #c9ec23;
+// $selected-color: #ff2a00;
+$common-font-color: #00171f;
+$secondary-color: #e4edf1;
+$selected-background-color: #c9ec23;
+
+$main-font: Roboto;
+$font-size: 0.9rem;
+$video-type-height: 1.7rem;
+
+$all-width: 60rem;
+
+$type-margin: 0 0.9rem 0.6rem 0;
+
+//input
+$inputWidth: 3rem;
+$selectedWidth: 4.5rem;
+$inputLeftMargin: 5px;
+$inputLeftPadding: 7px;
+$input-border-width: 0px;
+
+//input
+$height: $video-type-height - 0.1rem;
+$selectedPadding: 5px;
+$border-radius: 0px;
+$right: 4px;
+$commonColor: #cfc8c8;
+$selectingColor: #adaaaa;
+$arrowWidth: 12px;
+$arrow-color: rgb(238, 93, 93);
+
+$error-border: 1px solid $selected-font-color;
+$error-box-shadow: 0 0 0 1px rgba($selected-font-color, 1);
+
+p, h1{
+    margin: 0;
+}
+
+@mixin question{
+    font-weight: bold;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+      @content; 
+    }
+    @-moz-keyframes #{$name} {
+      @content;
+    }
+    @-ms-keyframes #{$name} {
+      @content;
+    }
+    @keyframes #{$name} {
+      @content;
+    } 
+  }
+
+@mixin fade-in-calc($name) {
+    -webkit-animation: fade-in-#{$name} 0.8s linear both;
+            animation: fade-in-#{$name} 0.8s linear both;
+    @-webkit-keyframes fade-in-#{$name} {
+        0% {
+          opacity: 0;
+          transform: translateY(-200%);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+    }
+    @keyframes fade-in-#{$name} {
+        0% {
+          opacity: 0;
+          transform: translateY(-150%);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+    }
+}
+
+@include keyframes(fade-out-calc-wrapper){
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    50%{
+        opacity: 0;
+        transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-150%);
+    }
+}
+
+@include keyframes(fade-out-calc){
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-150%);
+    }
+}
+
+.calc-app-wrapper{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-family: $main-font;
+    font-size: $font-size;
+    color: $common-font-color;
+    background-color: rgba($color: $secondary-color, $alpha: 0.8);
+    // opacity: 0;
+    // transition-duration: 0.8s;
+    // &.hide{
+    //     opacity: 0;
+    // }
+    // &.show{
+    //     opacity: 1;
+    // }
+    &.hide{
+        -webkit-animation: fade-out-calc-wrapper 0s linear 0.8s both;
+                animation: fade-out-calc-wrapper 0s linear 0.8s both;
+    }
+}
+
+body{
+    margin: 0;
+}
+
+.calc-app{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: $all-width;
+    background-color: white;
+    box-shadow: 0 0 5px $selected-color;
+    @include  fade-in-calc(calc);
+    &.hide{
+        -webkit-animation: fade-out-calc 0.8s linear both;
+                animation: fade-out-calc 0.8s linear both;
+    }
+    
+}
+

@@ -1,0 +1,33 @@
+@import '../../../app.scss';  
+ 
+.video-type{
+    height: $video-type-height;
+    padding: 0em 0.3em;
+    transition-duration: 0.5s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    //-webkit-perspective: 1000;
+    //border-radius: 10px;
+    margin: $type-margin; 
+    background-color: $secondary-color;
+
+    &.selected{
+        //box-shadow: inset 0 0 20px $selected-color;
+        cursor: pointer;
+        color: $common-font-color;
+        background-color: $selected-background-color;
+    }
+    &:not(.selected):hover{
+        box-shadow: 0 0 5px $selected-color;
+        cursor: pointer;
+        color: $common-font-color;
+
+    }
+    &.error{
+        //border: 1px solid red;
+        box-shadow: $error-box-shadow;
+    }
+}
+
